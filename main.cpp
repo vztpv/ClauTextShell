@@ -1,7 +1,7 @@
 
 
 #include <iostream>
-#include <stack>
+#include <vector>
 using namespace std;
 
 
@@ -9,19 +9,19 @@ using namespace std;
 
 
 // rename?
-bool IsEmpty(stack<int>& chk_brace, const string& str)
+bool IsEmpty(vector<int>& chk_brace, const string& str)
 {
 	for (int i = 0; i < str.size(); ++i) {
 		if ('{' == str[i]) {
-			chk_brace.push(0);
+			chk_brace.push_back(0);
 		}
 		else if ('}' == str[i]) {
 			if (chk_brace.empty()) {
-				chk_brace.push(1);
+				chk_brace.push_back(1);
 				return false;
 			}
 			else {
-				chk_brace.pop();
+				chk_brace.pop_back();
 			}
 		}
 	}
@@ -33,7 +33,7 @@ bool IsEmpty(stack<int>& chk_brace, const string& str)
 int main(void)
 {
 	wiz::load_data::UserType global;
-	stack<int> chk_brace;
+	vector<int> chk_brace;
 	string command;
 	string totalCommand;
 
@@ -76,10 +76,11 @@ int main(void)
 				totalCommand = "";
 			}
 			else {
-				if (command[0] == 1) {
+				if (chk_brace[0] == 1) {
 					cout << "Error in command, reset command" << endl;
 					totalCommand = "";
 					command = "";
+					chk_brace.clear();
 				}
 				else {
 					totalCommand.append(command);
