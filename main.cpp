@@ -39,6 +39,7 @@ int main(void)
 
 	while (true)
 	{
+		cout << "<< : "; //
 		getline(cin, command);
 
 		if (command.empty()) {
