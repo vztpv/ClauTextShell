@@ -69,7 +69,9 @@ int main(void)
 		else {
 			if (IsEmpty(chk_brace, command)) {
 				totalCommand.append(command);
-				if (wiz::load_data::LoadData::LoadDataFromString(totalCommand, global)) { }
+				if (wiz::load_data::LoadData::LoadDataFromString(totalCommand, global)) { 
+					cout << "Data Added!" << endl;
+				}
 				else {
 					cout << "Error : loaddata from string " << endl;
 				}
