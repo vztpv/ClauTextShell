@@ -1,9 +1,9 @@
 # Using VisualStudio2017, Modern? C++, Windows10
 
-# ClauTextShell
-    with https://github.com/vztpv/ClauText 
+# ClauTextShell  with https://github.com/vztpv/ClauText 
  
-# $M Usage ( ClauText includes editor?( https://github.com/vztpv/Console-Data-File-Editor ) )
+# $M Usage 
+# ( ClauText includes editor?( https://github.com/vztpv/Console-Data-File-Editor ) )
   1. Up : w or W
   2. Down : s or S
   
