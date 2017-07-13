@@ -1,7 +1,16 @@
 # Using VisualStudio2017, Modern? C++, Windows10
 
 # ClauTextShell  with https://github.com/vztpv/ClauText 
- 
+
+# Command
+  1. $print    # print all data and events (, and Main).
+  2. $exit
+  3. $M
+  4. $cls      # clear screen
+
+# Command not to start with '$'
+  it is considered data or events (, or Main).
+
 # $M Usage ( ClauText includes editor? https://github.com/vztpv/Console-Data-File-Editor )
   1. Up : w or W
   2. Down : s or S
