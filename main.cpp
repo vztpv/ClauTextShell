@@ -48,7 +48,7 @@ int main(void)
 
 		if (!command.empty() && '$' == command[0]) {
 			if ("$print" == command) {
-				cout << "global" << endl;
+				cout << ">> : global" << endl;
 				cout << global.ToString() << endl;
 				cout << endl;
 			}
@@ -61,6 +61,8 @@ int main(void)
 
 				gotoxy(0, 0);
 				setcolor(7, 0);
+
+				cout << ">> : $M end" << endl;
 			}
 			else if ("$cls" == command) {
 				system("cls"); // for windows!
@@ -70,17 +72,17 @@ int main(void)
 			if (IsEmpty(chk_brace, command)) {
 				totalCommand.append(command);
 				if (wiz::load_data::LoadData::LoadDataFromString(totalCommand, global)) { 
-					cout << "Data Added!" << endl;
+					cout << ">> : Data Added!" << endl;
 				}
 				else {
-					cout << "Error : loaddata from string " << endl;
+					cout << ">> : Error : loaddata from string " << endl;
 				}
 				command = "";
 				totalCommand = "";
 			}
 			else {
 				if (chk_brace[0] == 1) {
-					cout << "Error in command, reset command" << endl;
+					cout << ">> : Error in command, reset command" << endl;
 					totalCommand = "";
 					command = "";
 					chk_brace.clear();
