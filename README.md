@@ -35,8 +35,8 @@
     8. Find : f
     9. number 1, 2 <- do! for many same name...
   
-# ToDo
-    1. $call=id
+# ToDo And DONE
+    DONE - 1. $call=id
     2. $load="input.txt"
     3. $save="output.txt"
     4. $save_event_only="output2.txt" # include main(when main exist)
