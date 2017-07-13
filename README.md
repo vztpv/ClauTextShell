@@ -9,16 +9,16 @@
   4. $cls      # clear screen
 
 # Command not to start with '$'
-  it is considered data or events (, or Main).
-  ex)
-  << : x = 1 y = {
-  << :         z = 0 
-  << : }
-  >> : Data Added!
-  << : $print
-  >> : global
-  x = 1 y =  { z = 0 }
-  << : 
+    it is considered data or events (, or Main).
+    ex)
+    << : x = 1 y = {
+    << :         z = 0 
+    << : }
+    >> : Data Added!
+    << : $print
+    >> : global
+    x = 1 y = { z = 0 }
+    << : 
 
 # $M Usage ( ClauText includes editor? https://github.com/vztpv/Console-Data-File-Editor )
   1. Up : w or W
