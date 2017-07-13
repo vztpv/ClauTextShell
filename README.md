@@ -15,4 +15,9 @@
       ( add - a, change - c, remove - r, save - s )
   7. Text mode : t ( only at main screen, first screen )
   
-  
+# ToDo
+  1. $call=id
+  2. $load="input.txt"
+  3. $save="output.txt"
+  4. $save_event_only="output2.txt" # include main(when main exist)
+  5. $save_data_only="output3.txt"
