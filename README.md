@@ -17,7 +17,7 @@
   >> : Data Added!
   << : $print
   >> : global
-  x = 1 y = { z = 0 }
+  x = 1 y =  { z = 0 }
   << : 
 
 # $M Usage ( ClauText includes editor? https://github.com/vztpv/Console-Data-File-Editor )
