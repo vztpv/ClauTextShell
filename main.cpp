@@ -4,6 +4,9 @@
 #include <vector>
 using namespace std;
 
+#ifdef _DEBUG
+#include <vld.h>
+#endif
 
 #include <wiz/ClauText.h>
 
@@ -63,6 +66,32 @@ int main(void)
 				setcolor(7, 0);
 
 				cout << ">> : $M end" << endl;
+			}
+			else if (wiz::String::startsWith(command, "$call"))
+			{
+				wiz::load_data::UserType test;
+
+				try {
+					if (wiz::load_data::LoadData::LoadDataFromString(command, test))
+					{
+						try {
+							const string id = test.GetItemList(0).Get(0);
+							const string result = excute_module("Main = { $call = { id = " + id + "} }", &global, ExcuteData(), 1);
+
+							cout << endl << "excute result is : " << result << endl;
+						}
+						catch (...) // any exception..
+						{
+							cout << ">> : $call id or excute module error" << endl;
+						}
+					}
+					else {
+						cout << ">> : $call Error" << endl;
+					}
+				}
+				catch (...) {
+					cout << ">> : $call load data from string error" << endl;
+				}
 			}
 			else if ("$cls" == command) {
 				system("cls"); // for windows!
