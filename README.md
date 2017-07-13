@@ -10,6 +10,15 @@
 
 # Command not to start with '$'
   it is considered data or events (, or Main).
+  ex)
+  << : x = 1 y = {
+  << :         z = 0 
+  << : }
+  >> : Data Added!
+  << : $print
+  >> : global
+  x = 1 y = { z = 0 }
+  << : 
 
 # $M Usage ( ClauText includes editor? https://github.com/vztpv/Console-Data-File-Editor )
   1. Up : w or W
@@ -23,6 +32,8 @@
   6. Editor mode : e 
       ( add - a, change - c, remove - r, save - s )
   7. Text mode : t ( only at main screen, first screen )
+  8. Find : f
+  9. number 1, 2 <- do! for many same name...
   
 # ToDo
   1. $call=id
