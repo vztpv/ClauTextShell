@@ -32,7 +32,78 @@ bool IsEmpty(vector<int>& chk_brace, const string& str)
 
 	return chk_brace.empty();
 }
+void SaveWithOutEvent(ofstream& stream, wiz::load_data::UserType* ut, int depth)
+{
+	int itemListCount = 0;
+	int userTypeListCount = 0;
 
+	for (int i = 0; i < ut->GetCommentListSize(); ++i) {
+		for (int k = 0; k < depth; ++k) {
+			stream << "\t";
+		}
+		stream << (ut->GetCommentList(i));
+
+		if (i < ut->GetCommentListSize() - 1 || 0 == ut->GetIListSize()) {
+			stream << "\n";
+		}
+	}
+
+	for (int i = 0; i < ut->GetIListSize(); ++i) {
+		//std::cout << "ItemList" << endl;
+		if (ut->IsItemList(i)) {
+			for (int j = 0; j < ut->GetItemList(itemListCount).size(); j++) {
+				string temp;
+				for (int k = 0; k < depth; ++k) {
+					temp += "\t";
+				}
+				if (ut->GetItemList(itemListCount).GetName() != "") {
+					temp += ut->GetItemList(itemListCount).GetName();
+					temp += "=";
+				}
+				temp += ut->GetItemList(itemListCount).Get(j);
+				if (j != ut->GetItemList(itemListCount).size() - 1) {
+					temp += "\n";
+				}
+				stream << temp;
+			}
+			if (i != ut->GetIListSize() - 1) {
+				stream << "\n";
+			}
+			itemListCount++;
+		}
+		else if (ut->IsUserTypeList(i)) {
+			if (ut->GetUserTypeList(userTypeListCount)->GetName() == "Event"
+				|| ut->GetUserTypeList(userTypeListCount)->GetName() == "Main") {
+				userTypeListCount++;
+				continue;
+			}
+
+			// std::cout << "UserTypeList" << endl;
+			for (int k = 0; k < depth; ++k) {
+				stream << "\t";
+			}
+
+			if (ut->GetUserTypeList(userTypeListCount)->GetName() != "") {
+				stream << ut->GetUserTypeList(userTypeListCount)->GetName() << "=";
+			}
+
+			stream << "{\n";
+
+			SaveWithOutEvent(stream, ut->GetUserTypeList(userTypeListCount), depth + 1);
+			stream << "\n";
+
+			for (int k = 0; k < depth; ++k) {
+				stream << "\t";
+			}
+			stream << "}";
+			if (i != ut->GetIListSize() - 1) {
+				stream << "\n";
+			}
+
+			userTypeListCount++;
+		}
+	}
+}
 
 int main(void)
 {
@@ -157,6 +228,56 @@ int main(void)
 				}
 				else {
 					cout << ">> : $save_event_only syntax Error" << endl;
+				}
+			}
+
+			else if (wiz::String::startsWith(command, "$save_data_only"))
+			{
+				wiz::load_data::UserType test;
+
+				if (wiz::load_data::LoadData::LoadDataFromString(command, test))
+				{
+					ofstream outFile;
+
+					try {
+						const string name = test.GetItemList(0).Get(0);
+						const string result = wiz::String::substring(name, 1, name.size() - 2);
+
+						outFile.open(result);
+						if (outFile.fail()) {
+							//
+						}
+						else {
+							SaveWithOutEvent(outFile, &global, 0);
+							outFile.close();
+						}
+					}
+					catch (...) // any exception..
+					{
+						if (outFile.is_open()) {
+							outFile.close();
+						}
+						cout << ">> : $save_data_only error" << endl;
+					}
+				}
+			}
+			else if (wiz::String::startsWith(command, "$save"))
+			{
+				wiz::load_data::UserType test;
+				if (wiz::load_data::LoadData::LoadDataFromString(command, test))
+				{
+					const string name = test.GetItemList(0).Get(0);
+					const string result = wiz::String::substring(name, 1, name.size() - 2);
+
+					if (wiz::load_data::LoadData::SaveWizDB(global, result, "1")) {
+
+					}
+					else {
+						cout << ">> : $save error" << endl;
+					}
+				}
+				else {
+					cout << ">> : $save syntax Error" << endl;
 				}
 			}
 			else if ("$cls" == command) {
