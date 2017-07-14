@@ -38,7 +38,7 @@
 # ToDo And DONE
     DONE - 1. $call=id
     DONE - 2. $load="input.txt"
-    3. $save="output.txt"
+    DONE - 3. $save="output.txt"
     DONE - 4. $save_event_only="output2.txt" # include main(when main exist)
-    5. $save_data_only="output3.txt"
+    DONE - 5. $save_data_only="output3.txt"
     6. Main check! ( num of Main is 0~1. )
