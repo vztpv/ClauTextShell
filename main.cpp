@@ -67,6 +67,30 @@ int main(void)
 
 				cout << ">> : $M end" << endl;
 			}
+			else if (wiz::String::startsWith(command, "$load"))
+			{
+				wiz::load_data::UserType test;
+
+				if (wiz::load_data::LoadData::LoadDataFromString(command, test))
+				{
+					try {
+						const string name = test.GetItemList(0).Get(0);
+						const string result = wiz::String::substring(name, 1, name.size() - 2);
+
+						if (wiz::load_data::LoadData::LoadDataFromFile(result, global)) {}
+						else {
+							cout << ">> : load data from file error" << endl;
+						}
+					}
+					catch (...) // any exception..
+					{
+						cout << ">> : load error" << endl;
+					}
+				}
+				else {
+					cout << ">> : $load syntax Error" << endl;
+				}
+			}
 			else if (wiz::String::startsWith(command, "$call"))
 			{
 				wiz::load_data::UserType test;
