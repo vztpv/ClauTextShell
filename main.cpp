@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <vector>
+#include <fstream>
 using namespace std;
 
 #ifdef _DEBUG
@@ -48,7 +49,7 @@ int main(void)
 		if (command.empty()) {
 			continue;
 		}
-
+		
 		if (!command.empty() && '$' == command[0]) {
 			if ("$print" == command) {
 				cout << ">> : global" << endl;
@@ -66,6 +67,34 @@ int main(void)
 				setcolor(7, 0);
 
 				cout << ">> : $M end" << endl;
+			}
+			else if (wiz::String::startsWith(command, "$call"))
+			{
+				wiz::load_data::UserType test;
+
+				try {
+					if (wiz::load_data::LoadData::LoadDataFromString(command, test))
+					{
+						try {
+							wiz::load_data:: UserType ut = global;
+							const string id = test.GetItemList(0).Get(0);
+							const string result = excute_module("Main = { $call = { id = " + id + "} }", &ut, ExcuteData(), 1);
+
+							global = std::move(ut);
+							cout << endl << "excute result is : " << result << endl;
+						}
+						catch (...) // any exception..
+						{
+							cout << ">> : $call id or excute module error" << endl;
+						}
+					}
+					else {
+						cout << ">> : $call Error" << endl;
+					}
+				}
+				catch (...) {
+					cout << ">> : $call load data from string error" << endl;
+				}
 			}
 			else if (wiz::String::startsWith(command, "$load"))
 			{
@@ -91,30 +120,43 @@ int main(void)
 					cout << ">> : $load syntax Error" << endl;
 				}
 			}
-			else if (wiz::String::startsWith(command, "$call"))
+			else if (wiz::String::startsWith(command, "$save_event_only"))
 			{
 				wiz::load_data::UserType test;
 
-				try {
-					if (wiz::load_data::LoadData::LoadDataFromString(command, test))
-					{
-						try {
-							const string id = test.GetItemList(0).Get(0);
-							const string result = excute_module("Main = { $call = { id = " + id + "} }", &global, ExcuteData(), 1);
+				if (wiz::load_data::LoadData::LoadDataFromString(command, test))
+				{
+					ofstream outFile;
 
-							cout << endl << "excute result is : " << result << endl;
+					try {
+						const string name = test.GetItemList(0).Get(0);
+						const string result = wiz::String::substring(name, 1, name.size() - 2);
+
+						outFile.open(result);
+						if (outFile.fail()) {
+							//
 						}
-						catch (...) // any exception..
-						{
-							cout << ">> : $call id or excute module error" << endl;
+						else {
+							for (int i = 0; i < global.GetUserTypeListSize(); ++i) {
+								if (global.GetUserTypeList(i)->GetName() == "Event") {
+									outFile << "Event = {\n";
+									global.GetUserTypeList(i)->Save1(outFile, 1);
+									outFile << "\n}\n";
+								}
+							}
+							outFile.close();
 						}
 					}
-					else {
-						cout << ">> : $call Error" << endl;
+					catch (...) // any exception..
+					{
+						if (outFile.is_open()) {
+							outFile.close();
+						}
+						cout << ">> : $save_event_only error" << endl;
 					}
 				}
-				catch (...) {
-					cout << ">> : $call load data from string error" << endl;
+				else {
+					cout << ">> : $save_event_only syntax Error" << endl;
 				}
 			}
 			else if ("$cls" == command) {
@@ -123,6 +165,8 @@ int main(void)
 		}
 		else {
 			if (IsEmpty(chk_brace, command)) {
+				command.append("\n");
+
 				totalCommand.append(command);
 				if (wiz::load_data::LoadData::LoadDataFromString(totalCommand, global)) { 
 					cout << ">> : Data Added!" << endl;
@@ -141,6 +185,8 @@ int main(void)
 					chk_brace.clear();
 				}
 				else {
+					command.append("\n");
+
 					totalCommand.append(command);
 					command = "";
 				}
