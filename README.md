@@ -1,7 +1,7 @@
 # Using VisualStudio2017, Modern? C++, Windows10
 
 # ClauTextShell  with https://github.com/vztpv/ClauText 
-
+    1. using "wiz" folder in ClauText Project.
 # Command
     1. $print    # print all data and events (, and Main).
     2. $exit
