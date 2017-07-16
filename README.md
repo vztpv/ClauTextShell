@@ -41,6 +41,5 @@
     DONE - 3. $save="output.txt"
     DONE - 4. $save_event_only="output2.txt" # include main(when main exist)
     DONE - 5. $save_data_only="output3.txt"
-    6. Main check! ( num of Main is 0~1. ) ??
-    7. $save_event_and_main_only = "output4.txt"  # ??
-    8. $call = { id = 0 parameter = 1 } # add parameter?
+    6. Main check! ( num of Main is 0. ) ??
+    
