@@ -10,7 +10,7 @@
     5. $call=id
     6. $load="input.txt"
     7. $save="output.txt"
-    8. $save_event_only="output2.txt" # include main(when main exist)
+    8. $save_event_only="output2.txt" # no include main(when main exist)
     9. $save_data_only="output3.txt"
 # Command not to start with '$'
     it is considered data or events (, or Main).
@@ -43,7 +43,7 @@
     DONE - 1. $call=id
     DONE - 2. $load="input.txt"
     DONE - 3. $save="output.txt"
-    DONE - 4. $save_event_only="output2.txt" # include main(when main exist)
+    DONE - 4. $save_event_only="output2.txt" # no include main(when main exist)
     DONE - 5. $save_data_only="output3.txt"
     6. Main check! ( num of Main is 0. ) ??
     7. $print_data_only
