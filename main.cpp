@@ -32,7 +32,7 @@ bool IsEmpty(vector<int>& chk_brace, const string& str)
 
 	return chk_brace.empty();
 }
-void SaveWithOutEvent(ofstream& stream, wiz::load_data::UserType* ut, int depth)
+void SaveWithOutEvent(ostream& stream, wiz::load_data::UserType* ut, int depth)
 {
 	int itemListCount = 0;
 	int userTypeListCount = 0;
@@ -124,7 +124,13 @@ int main(void)
 		if (!command.empty() && '$' == command[0]) {
 			if ("$print" == command) {
 				cout << ">> : global" << endl;
-				cout << global.ToString() << endl;
+				//cout << global.ToString() << endl;
+				global.Save1(cout);
+				cout << endl;
+			}
+			else if ("$print_data_only" == command) {
+				cout << ">> : global" << endl;
+				SaveWithOutEvent(cout, &global, 0);
 				cout << endl;
 			}
 			else if ("$exit" == command) {
