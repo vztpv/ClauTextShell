@@ -3,15 +3,16 @@
 # ClauTextShell  with https://github.com/vztpv/ClauText 
     1. using "wiz" folder in ClauText Project.
 # Command
-    1. $print    # print all data and events (, and Main).
-    2. $exit
-    3. $M
-    4. $cls      # clear screen
-    5. $call=id
-    6. $load="input.txt"
-    7. $save="output.txt"
-    8. $save_event_only="output2.txt" # no include main(when main exist)
-    9. $save_data_only="output3.txt"
+     1. $print    # print all data and events (, and Main).
+     2. $exit
+     3. $M
+     4. $cls      # clear screen
+     5. $call=id
+     6. $load="input.txt"
+     7. $save="output.txt"
+     8. $save_event_only="output2.txt" # no include main(when main exist)
+     9. $save_data_only="output3.txt"
+    10. $print_data_only
 # Command not to start with '$'
     it is considered data or events (, or Main).
     ex)
@@ -46,4 +47,4 @@
     DONE - 4. $save_event_only="output2.txt" # no include main(when main exist)
     DONE - 5. $save_data_only="output3.txt"
     6. Main check! ( num of Main is 0. ) ??
-    7. $print_data_only
+    DONE - 7. $print_data_only
