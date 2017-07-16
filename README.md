@@ -32,7 +32,7 @@
     6. Editor mode : e 
         ( add - a, change - c, remove - r, save - s )
     7. Text mode : t ( only at main screen, first screen )
-    8. Find : f
+    8. Find Line : f ( line : integer, start at zero. )
     9. number 1, 2 <- do! for many same name...
   
 # ToDo And DONE
