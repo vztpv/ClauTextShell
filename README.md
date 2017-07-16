@@ -7,7 +7,11 @@
     2. $exit
     3. $M
     4. $cls      # clear screen
-
+    5. $call=id
+    6. $load="input.txt"
+    7. $save="output.txt"
+    8. $save_event_only="output2.txt" # include main(when main exist)
+    9. $save_data_only="output3.txt"
 # Command not to start with '$'
     it is considered data or events (, or Main).
     ex)
