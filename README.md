@@ -33,7 +33,7 @@
         ( add - a, change - c, remove - r, save - s )
     7. Text mode : t ( only at main screen, first screen )
     8. Find Line : f ( line : integer, start at zero. )
-    9. number 1, 2 <- do! for many same name...
+    9. Number 1, 2 <- do! for many same names, 1 : first of many same names, 2 : last of many same names
   
 # ToDo And DONE
     DONE - 1. $call=id
