@@ -3,7 +3,7 @@
 #include <iostream>
 #include <vector>
 #include <fstream>
-using namespace std;
+
 
 #ifdef _DEBUG
 #include <vld.h>
@@ -13,7 +13,7 @@ using namespace std;
 
 
 // rename?
-bool IsEmpty(vector<int>& chk_brace, const string& str)
+bool IsEmpty(std::vector<int>& chk_brace, const std::string& str)
 {
 	for (int i = 0; i < str.size(); ++i) {
 		if ('{' == str[i]) {
@@ -32,7 +32,7 @@ bool IsEmpty(vector<int>& chk_brace, const string& str)
 
 	return chk_brace.empty();
 }
-void SaveWithOutEvent(ostream& stream, wiz::load_data::UserType* ut, int depth)
+void SaveWithOutEvent(std::ostream& stream, wiz::load_data::UserType* ut, int depth)
 {
 	int itemListCount = 0;
 	int userTypeListCount = 0;
@@ -52,7 +52,7 @@ void SaveWithOutEvent(ostream& stream, wiz::load_data::UserType* ut, int depth)
 		//std::cout << "ItemList" << endl;
 		if (ut->IsItemList(i)) {
 			for (int j = 0; j < ut->GetItemList(itemListCount).size(); j++) {
-				string temp;
+				std::string temp;
 				for (int k = 0; k < depth; ++k) {
 					temp += "\t";
 				}
@@ -108,30 +108,32 @@ void SaveWithOutEvent(ostream& stream, wiz::load_data::UserType* ut, int depth)
 int main(void)
 {
 	wiz::load_data::UserType global;
-	vector<int> chk_brace;
-	string command;
-	string totalCommand;
+	std::vector<int> chk_brace;
+	std::string command;
+	std::string totalCommand;
 
 	while (true)
 	{
-		cout << "<< : "; //
-		getline(cin, command);
+		std::cout << "<< : "; //
+		std::getline(std::cin, command);
 
 		if (command.empty()) {
 			continue;
 		}
 		
+		// Evnent = {
+		//		$call = { id = 0 } # tab or 들여쓰기!!
 		if (!command.empty() && '$' == command[0]) {
 			if ("$print" == command) {
-				cout << ">> : global" << endl;
+				std::cout << ">> : global" << std::endl;
 				//cout << global.ToString() << endl;
-				global.Save1(cout);
-				cout << endl;
+				global.Save1(std::cout);
+				std::cout << std::endl;
 			}
 			else if ("$print_data_only" == command) {
-				cout << ">> : global" << endl;
-				SaveWithOutEvent(cout, &global, 0);
-				cout << endl;
+				std::cout << ">> : global" << std::endl;
+				SaveWithOutEvent(std::cout, &global, 0);
+				std::cout << std::endl;
 			}
 			else if ("$exit" == command) {
 				break;
@@ -143,7 +145,7 @@ int main(void)
 				gotoxy(0, 0);
 				setcolor(7, 0);
 
-				cout << ">> : $M end" << endl;
+				std::cout << ">> : $M end" << std::endl;
 			}
 			else if (wiz::String::startsWith(command, "$call"))
 			{
@@ -154,23 +156,23 @@ int main(void)
 					{
 						try {
 							wiz::load_data:: UserType ut = global;
-							const string id = test.GetItemList(0).Get(0);
-							const string result = excute_module("Main = { $call = { id = " + id + "} }", &ut, ExcuteData(), 1);
+							const std::string id = test.GetItemList(0).Get(0);
+							const std::string result = excute_module("Main = { $call = { id = " + id + "} }", &ut, ExcuteData(), 1);
 
 							global = std::move(ut);
-							cout << endl << "excute result is : " << result << endl;
+							std::cout << std::endl << "excute result is : " << result << std::endl;
 						}
 						catch (...) // any exception..
 						{
-							cout << ">> : $call id or excute module error" << endl;
+							std::cout << ">> : $call id or excute module error" << std::endl;
 						}
 					}
 					else {
-						cout << ">> : $call Error" << endl;
+						std::cout << ">> : $call Error" << std::endl;
 					}
 				}
 				catch (...) {
-					cout << ">> : $call load data from string error" << endl;
+					std::cout << ">> : $call load data from string error" << std::endl;
 				}
 			}
 			else if (wiz::String::startsWith(command, "$load"))
@@ -180,21 +182,21 @@ int main(void)
 				if (wiz::load_data::LoadData::LoadDataFromString(command, test))
 				{
 					try {
-						const string name = test.GetItemList(0).Get(0);
-						const string result = wiz::String::substring(name, 1, name.size() - 2);
+						const std::string name = test.GetItemList(0).Get(0);
+						const std::string result = wiz::String::substring(name, 1, name.size() - 2);
 
 						if (wiz::load_data::LoadData::LoadDataFromFile(result, global)) {}
 						else {
-							cout << ">> : load data from file error" << endl;
+							std::cout << ">> : load data from file error" << std::endl;
 						}
 					}
 					catch (...) // any exception..
 					{
-						cout << ">> : load error" << endl;
+						std::cout << ">> : load error" << std::endl;
 					}
 				}
 				else {
-					cout << ">> : $load syntax Error" << endl;
+					std::cout << ">> : $load syntax Error" << std::endl;
 				}
 			}
 			else if (wiz::String::startsWith(command, "$save_event_only"))
@@ -203,11 +205,11 @@ int main(void)
 
 				if (wiz::load_data::LoadData::LoadDataFromString(command, test))
 				{
-					ofstream outFile;
+					std::ofstream outFile;
 
 					try {
-						const string name = test.GetItemList(0).Get(0);
-						const string result = wiz::String::substring(name, 1, name.size() - 2);
+						const std::string name = test.GetItemList(0).Get(0);
+						const std::string result = wiz::String::substring(name, 1, name.size() - 2);
 
 						outFile.open(result);
 						if (outFile.fail()) {
@@ -229,11 +231,11 @@ int main(void)
 						if (outFile.is_open()) {
 							outFile.close();
 						}
-						cout << ">> : $save_event_only error" << endl;
+						std::cout << ">> : $save_event_only error" << std::endl;
 					}
 				}
 				else {
-					cout << ">> : $save_event_only syntax Error" << endl;
+					std::cout << ">> : $save_event_only syntax Error" << std::endl;
 				}
 			}
 
@@ -243,11 +245,11 @@ int main(void)
 
 				if (wiz::load_data::LoadData::LoadDataFromString(command, test))
 				{
-					ofstream outFile;
+					std::ofstream outFile;
 
 					try {
-						const string name = test.GetItemList(0).Get(0);
-						const string result = wiz::String::substring(name, 1, name.size() - 2);
+						const std::string name = test.GetItemList(0).Get(0);
+						const std::string result = wiz::String::substring(name, 1, name.size() - 2);
 
 						outFile.open(result);
 						if (outFile.fail()) {
@@ -263,7 +265,7 @@ int main(void)
 						if (outFile.is_open()) {
 							outFile.close();
 						}
-						cout << ">> : $save_data_only error" << endl;
+						std::cout << ">> : $save_data_only error" << std::endl;
 					}
 				}
 			}
@@ -272,18 +274,18 @@ int main(void)
 				wiz::load_data::UserType test;
 				if (wiz::load_data::LoadData::LoadDataFromString(command, test))
 				{
-					const string name = test.GetItemList(0).Get(0);
-					const string result = wiz::String::substring(name, 1, name.size() - 2);
+					const std::string name = test.GetItemList(0).Get(0);
+					const std::string result = wiz::String::substring(name, 1, name.size() - 2);
 
 					if (wiz::load_data::LoadData::SaveWizDB(global, result, "1")) {
 
 					}
 					else {
-						cout << ">> : $save error" << endl;
+						std::cout << ">> : $save error" << std::endl;
 					}
 				}
 				else {
-					cout << ">> : $save syntax Error" << endl;
+					std::cout << ">> : $save syntax Error" << std::endl;
 				}
 			}
 			else if ("$cls" == command) {
@@ -296,17 +298,17 @@ int main(void)
 
 				totalCommand.append(command);
 				if (wiz::load_data::LoadData::LoadDataFromString(totalCommand, global)) { 
-					cout << ">> : Data Added!" << endl;
+					std::cout << ">> : Data Added!" << std::endl;
 				}
 				else {
-					cout << ">> : Error : loaddata from string " << endl;
+					std::cout << ">> : Error : loaddata from string " << std::endl;
 				}
 				command = "";
 				totalCommand = "";
 			}
 			else {
 				if (chk_brace[0] == 1) {
-					cout << ">> : Error in command, reset command" << endl;
+					std::cout << ">> : Error in command, reset command" << std::endl;
 					totalCommand = "";
 					command = "";
 					chk_brace.clear();
