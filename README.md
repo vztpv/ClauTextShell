@@ -1,4 +1,4 @@
-# Using VisualStudio2017, Modern? C++, Windows10
+# Using VisualStudio2017(C++17option?), Modern? C++17, Windows10
 
 # ClauTextShell  with https://github.com/vztpv/ClauText 
     1. using "wiz" folder in ClauText Project.
